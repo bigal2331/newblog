@@ -1,0 +1,46 @@
+I. create the server.js
+
+
+
+if server gets stuck run these commands:
+https://stackoverflow.com/questions/9898372/how-to-fix-error-listen-eaddrinuse-while-using-nodejs
+lsof -i tcp: port_number (i.e. 8080)
+
+
+libraries that you need to install:
+ 	"babel-cli": "^6.11.4",
+    "babel-core": "^6.13.2",
+    "babel-preset-es2015": "^6.13.2",
+    "babel-preset-react": "^6.11.1",
+    "ejs": "^2.5.7",
+    "express": "^4.14.1",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "react-router": "^2.6.1"
+
+
+
+1: create a store in entry point of your application (src/index.js) - data that you will use aka posts
+2: create a reducer that returns your post data (reducers/reducer-posts.js)
+3: plug in your reducers data into the entry point of your app (src/index.js) and create a store
+	a. import allReducers from './reducers' - this imports './reducers/index.js' by default
+	b. createStore(allReducers);
+
+4: Then create a import provider from redux into 'src/index.js'
+	a. a provider makes your store data available to it's child components (<App />) and it's children (aka all your application)
+5: create a containers/post-list.js:
+	a. import React, {Component} from 'react';
+	b. import {bindActionCreators} from 'redux';
+	c. import {connect} from 'react-redux';
+	d. create a container by declaring a class and pass in the posts data: 
+		i. class PostList extends Component
+		ii. declare mapStateToProps(state) - should return { posts: state.posts} 
+			- when you create a store in '/src/index.js' the reducer you pass into the createStore(reducer) stores the data of the reducer in the state with the keyName you provided in the combineReducers(objectOfReducers)(/reducers/index.js) (which returns the reducer) you passed into the createStore function. Then the state is passed to the <App /> by the provider (/src/index.js) via the store={store} prop which makes the state available to all of the components we put in the App class in (components/app.js)
+		iii. declare matchDispatchToProps- should return bindActionCreators({selectPost: selectPost}, dispatch)
+		iv. then you connect both to the props of the component:
+			export default connect(mapStateToProps, matchDispatchToProps)(PostList);
+		v. make the action and import it to the container: import {selectPost} from '../actions/myaction'
+			i. whenever an action happens it gets transmitted to all the reducers
+
+	c. import the PostList into the app.js (your main layout) component
+6: app.js is your main layout
