@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run build",
+    "webpack": "./node_modules/.bin/webpack -w",
     "build": "webpack -d && cp src/index.html dist/index.html && webpack-dev-server --port $PORT --host $IP --content-base src/ --inline --hot",
     "build:prod": "webpack -p && cp src/index.html dist/index.html"
   },
