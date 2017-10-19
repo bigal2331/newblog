@@ -9,7 +9,7 @@ html, body {
 
 
 #root {
-	background: url('./mac.jpeg');
+	background: url('../public/mac.jpeg');
 	width: 100%;
 	height: 130%;
 }
